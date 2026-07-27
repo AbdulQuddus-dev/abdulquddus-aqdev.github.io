@@ -343,7 +343,7 @@ var PROJECTS = [
        findMyPhoneUrl + "6.webp",
        findMyPhoneUrl + "7.webp"
     ],
-    downloadUrl: "https://github.com/AbdulQuddus-dev/findMyPhone/releases/download/v0.0.1/app-release.apk",
+    downloadUrl: "https://github.com/AbdulQuddus-dev/findMyPhone/releases/download/v0.1.0/app-release.apk",
     sourceUrl: "",
     demoUrl: "",
     featured: false,
