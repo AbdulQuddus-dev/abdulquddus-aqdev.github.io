@@ -335,9 +335,9 @@ var PROJECTS = [
     icon: "search",
     appIcon: findMyPhoneUrl + "find_my_phone_icon.png",
     screenshots: [
-       findMyPhoneUrl + "onboarding1.png",
-       findMyPhoneUrl + "onboarding2.png",
-       findMyPhoneUrl + "onboarding3.png",
+       findMyPhoneUrl + "onboarding1.jpg",
+       findMyPhoneUrl + "onboarding2.jpg",
+       findMyPhoneUrl + "onboarding3.jpg",
        findMyPhoneUrl + "1.webp",
        findMyPhoneUrl + "2.webp",
        findMyPhoneUrl + "3.webp",
