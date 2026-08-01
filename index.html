@@ -1094,10 +1094,18 @@ function renderProjects(f){
   // Fetch Firebase stats — ننتظر جهوزية وحدة Firebase (module) إن لم تكن
   // جاهزة بعد، لتفادي خطأ "AQStats is undefined" الناتج عن كون type="module"
   // يُحمَّل بشكل مؤجل تلقائياً وقد يتأخر عن هذا السكربت العادي.
+  // نعرض أولاً آخر أرقام معروفة (مخزّنة محلياً) فوراً لحظة فتح الموقع،
+  // ثم نستبدلها بالأرقام الحيّة الحقيقية بمجرد وصول Firestore — هذا يلغي
+  // شاشة "…" الفارغة ويجعل الظهور فورياً حتى مع بطء الشبكة.
+  try{
+    var _cached=JSON.parse(localStorage.getItem('aq_stats_cache')||'{}');
+    Object.keys(_cached).forEach(function(pid){_sc[pid]=_cached[pid];updateCard(pid,_cached[pid]);});
+  }catch(e){}
   function fetchStats(){
     AQStats.getAllStats(function(all){
       Object.keys(all).forEach(function(pid){_sc[pid]=all[pid];updateCard(pid,all[pid]);});
       PROJECTS.forEach(function(p){if(!all[p.id])updateCard(p.id,{views:0,downloads:0,avgRating:0});});
+      try{localStorage.setItem('aq_stats_cache',JSON.stringify(all));}catch(e){}
     });
   }
   if(window.AQStats){fetchStats();}
@@ -1159,8 +1167,8 @@ function openModal(id){
   // Meta
   var mf=[{l:'النوع',v:t.label},{l:'المنصة',v:p.platform},{l:'الإصدار',v:p.version},{l:'الحجم',v:p.size},{l:'التصنيف',v:p.category},{l:'السنة',v:p.date}];
   var mh=mf.filter(function(x){return x.v&&x.v!=='—';}).map(function(x){return'<div class="m-item"><strong>'+x.l+'</strong>'+x.v+'</div>';}).join('');
-  mh+='<div class="m-item"><strong>👁️ مشاهدات</strong><span id="mViews">…</span></div>';
-  mh+='<div class="m-item"><strong>⬇️ تحميلات</strong><span id="mDls">…</span></div>';
+  mh+='<div class="m-item"><strong>👁️ مشاهدات</strong><span id="mViews">'+(_sc[id]?fmtN(_sc[id].views||0):'…')+'</span></div>';
+  mh+='<div class="m-item"><strong>⬇️ تحميلات</strong><span id="mDls">'+(_sc[id]?fmtN(_sc[id].downloads||0):'…')+'</span></div>';
   document.getElementById('mMeta').innerHTML=mh;
 
   // Tags
