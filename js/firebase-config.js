@@ -31,7 +31,7 @@ var AQStats = (function () {
   function listenStats(projectId, cb) {
     return onSnapshot(doc(db, "projects", projectId),
       function (d) { cb(d.exists() ? d.data() : { views:0, downloads:0 }); },
-      function ()  { cb({ views:0, downloads:0 }); });
+      function (err)  { console.error('[AQStats] listenStats failed for', projectId, '—', err.code, err.message); cb({ views:0, downloads:0 }); });
   }
 
   // قراءة لمرة واحدة بدل اشتراك مباشر مستمر (onSnapshot) — أخف على الموارد
@@ -39,17 +39,17 @@ var AQStats = (function () {
   function getStats(projectId, cb) {
     getDoc(doc(db, "projects", projectId))
       .then(function (d) { cb(d.exists() ? d.data() : { views:0, downloads:0 }); })
-      .catch(function ()  { cb({ views:0, downloads:0 }); });
+      .catch(function (err)  { console.error('[AQStats] getStats failed for', projectId, '—', err.code, err.message); cb({ views:0, downloads:0 }); });
   }
 
   function recordView(projectId) {
     setDoc(doc(db, "projects", projectId), { views: increment(1) }, { merge: true })
-      .catch(function(){});
+      .catch(function(err){ console.error('[AQStats] recordView WRITE FAILED for', projectId, '—', err.code, err.message, '(تحقق من Firestore Security Rules أو الحصة اليومية Quota)'); });
   }
 
   function recordDownload(projectId) {
     setDoc(doc(db, "projects", projectId), { downloads: increment(1) }, { merge: true })
-      .catch(function(){});
+      .catch(function(err){ console.error('[AQStats] recordDownload WRITE FAILED for', projectId, '—', err.code, err.message, '(تحقق من Firestore Security Rules أو الحصة اليومية Quota)'); });
   }
 
   function getAllStats(cb) {
@@ -58,7 +58,7 @@ var AQStats = (function () {
         var r = {};
         snap.forEach(function (d) { r[d.id] = d.data(); });
         cb(r);
-      }).catch(function () { cb({}); });
+      }).catch(function (err) { console.error('[AQStats] getAllStats failed —', err.code, err.message, '(تحقق من Firestore Security Rules أو الحصة اليومية Quota)'); cb({}); });
   }
 
   return { listenStats:listenStats, getStats:getStats, recordView:recordView, recordDownload:recordDownload, getAllStats:getAllStats };
@@ -78,7 +78,7 @@ var AQReviews = (function () {
         arr.push({ id:d.id, name:data.name||"مجهول", rating:data.rating||0, text:data.text||"", date:data.dateStr||"" });
       });
       cb(arr);
-    }, function () { cb([]); });
+    }, function (err) { console.error('[AQReviews] listenReviews failed for', projectId, '—', err.code, err.message); cb([]); });
   }
 
   // قراءة لمرة واحدة بدل اشتراك مستمر — نفس سبب getStats أعلاه.
@@ -93,7 +93,7 @@ var AQReviews = (function () {
         });
         cb(arr);
       })
-      .catch(function () { cb([]); });
+      .catch(function (err) { console.error('[AQReviews] getReviews failed for', projectId, '—', err.code, err.message); cb([]); });
   }
 
   function addReview(projectId, name, rating, text, cb) {
@@ -103,7 +103,7 @@ var AQReviews = (function () {
     addDoc(collection(db, "projects", projectId, "reviews"),
       { name:name||"مجهول", rating:rating, text:text, dateStr:ds, createdAt: serverTimestamp() })
       .then(function () { _updateAvg(projectId); cb(true);  })
-      .catch(function () { cb(false); });
+      .catch(function (err) { console.error('[AQReviews] addReview WRITE FAILED for', projectId, '—', err.code, err.message, '(تحقق من Firestore Security Rules)'); cb(false); });
   }
 
   function _updateAvg(pid) {
