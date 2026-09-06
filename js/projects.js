@@ -10,6 +10,7 @@ const deptSystemUrl = baseImageUrl + "imageDeptSystem/";
 const sougaAppUrl = baseImageUrl + "imageSougaApp/";
 const findMyPhoneUrl = baseImageUrl + "imageFindMyPhone/";
 const wifiManagerUrl = baseImageUrl + "imageWifiManager/";
+const dyooniUrl = baseImageUrl + "imageDyooni/";
 // ════════ أنواع المشاريع ════════
 var PROJECT_TYPES = {
   android: { label: "Android",      badge: "Android",   downloadLabel: "تحميل APK مجاناً",  color: "#3DDC84" },
@@ -359,5 +360,43 @@ findMyPhoneUrl + "16.jpg"
     date: "2026"
   },
   
+
+  // ══════════════════════════════
+  //  10. ديوني — Dyooni
+  // ══════════════════════════════
+  {
+    id: "dyooni",
+    title: "ديوني — Dyooni",
+    subtitle: "إدارة ديونك بصوتك — بلا إنترنت، بلا تعقيد",
+    shareTitle: "📒 ديوني — التطبيق الذي يُنهي فوضى دفاتر الديون",
+    shareDesc: "لم تعد بحاجة لتقليب دفاتر ولا تذكّر من له ومن عليه — انطق العملية وسيسجّلها ديوني فورًا، حتى بلا إنترنت. تقارير مالية احترافية بضغطة واحدة، ونسخة احتياطية مشفّرة تحميك من فقدان أي رقم. جرّبه مجانًا الآن 👇",
+    description: "تطبيق عربي يحوّل تسجيل ديونك وحساباتك إلى ثوانٍ — انطق العملية وسيفهمها ديوني بنفسه حتى بلا إنترنت، ثم يمنحك تقارير مالية جاهزة للطباعة.",
+    longDescription: "كل صاحب محل أو عمل صغير يعرف هذا الكابوس: دفتر ديون يضيع، رقم يُنسى، أو عميل يُنكر مبلغًا لا دليل عليه. ديوني بُني ليُنهي هذا نهائيًا.\n\n✅ سجّل أي عملية في ثوانٍ — اكتبها أو انطق بها مباشرة\n✅ يعمل صوتيًا حتى بلا إنترنت — صوتك لا يغادر جهازك إطلاقًا\n✅ أصدر تقرير PDF أو Excel احترافيًا بضغطة واحدة، يحمل شعارك وتوقيعك\n✅ بياناتك محمية بتشفير AES-256 وقواعد أمان صارمة على Firebase — بلا إعلانات وبلا تتبّع\n✅ نسخ احتياطي اختياري إلى Google Drive الخاص بك أنت فقط\n✅ عربي بالكامل (RTL) مع دعم الإنجليزية، ووضعين فاتح وداكن\n\nبإدارة وهندسة لؤي القميري، وتطوير عبدالقدوس الشيباني.",
+    type: "android",
+    platform: "Android 5.0+",
+    status: "released",
+    version: "0.1.0",
+    size: "—",
+    category: "إدارة مالية",
+    tags: ["Flutter", "Firebase", "Riverpod", "Vosk", "AES-256", "go_router"],
+    keywords: "ديوني dyooni إدارة ديون حسابات تسجيل صوتي تقارير مالية pdf excel flutter firebase تشفير android عربي",
+    color: "#F0B733",
+    accentColor: "#001034",
+    icon: "wallet",
+    appIcon: dyooniUrl + "icon-dyooni.png",
+    screenshots: [
+      dyooniUrl + "1.webp",
+      dyooniUrl + "2.webp",
+      dyooniUrl + "3.webp",
+      dyooniUrl + "4.webp",
+      dyooniUrl + "5.webp",
+      dyooniUrl + "6.webp"
+    ],
+    downloadUrl: "",
+    sourceUrl: "",
+    demoUrl: "https://dyooni-ea39a.web.app/",
+    featured: true,
+    date: "2026"
+  },
 
 ];
